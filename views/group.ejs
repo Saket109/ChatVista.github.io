@@ -1,0 +1,136 @@
+<%- include('layouts/header.ejs') %>
+
+<h2 class="mb-4"> GROUPS </h2>
+
+<div class="container">
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createGroupModal">
+    Create Group
+    </button>
+
+    <%
+        if(typeof message !== 'undefined'){
+            %>
+                <p style="color: green;"><%= message %></p>
+            <%
+        }
+    %>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>Name</th>
+                <th>Members</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%
+                if(groups.length > 0){
+                    for(let i=0;i<groups.length;i++){
+                        %>
+                            <tr>
+                                <td> <%= i+1 %> </td>
+                                <td>
+                                    <%= groups[i]['name'] %>
+                                </td>
+                                <td>
+                                    <a class="cursor-pointer addMember" data-id="<%= groups[i]['_id'] %>" data-toggle="modal" data-target="#memberModal">Members</a>
+                                </td>
+                                <td></td>
+                            </tr>
+                        <%
+                    }
+                }else{
+                    %>
+                        <tr>
+                            <td>No Groups Found</td>
+                        </tr>
+                    <%
+                }
+            %>
+        </tbody>
+    </table>
+
+
+       <!-- Modal -->
+    <div class="modal fade" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">MEMBERS</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form action="" id="add-member-form">
+            <div class="modal-body">
+                <input type="hidden" name="group_id" id="group_id">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <div class="addMemberTable">
+                                    <table class="table addMembersInTable">
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <p id="add-member-error"></p>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary"> Update Member </button>
+            </div>
+        </form>
+ 
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="createGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">CREATE GROUP</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form action="" method="post">
+            <div class="modal-body">
+                <input type="text" name="name" placeholder="Enter Group Name" required class="w-100">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary"> CREATE </button>
+            </div>
+        </form>
+ 
+        </div>
+    </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<%- include('layouts/footer.ejs') %>
